@@ -9,22 +9,33 @@ import Footer from "./components/Footer";
 import {BrowserRouter} from "react-router-dom";
 import {Route, Routes} from "react-router";
 import Login from "./components/Login";
-import Create from "./components/Create";
+import Detail from "./components/Detail";
+import SignUp from "./components/SignUp";
+import Movie from "./components/Movie";
+import ListSearchMovie from "./components/ListSearchMovie";
+import ListSearchAuthor from "./components/ListSearchAuthor";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <Header/>
+
         <BrowserRouter>
+            <Header/>
             <Routes>
                 <Route element={<Home/>} path={""}/>
+                <Route element={<Home/>} path={"/home"}/>
                 <Route element={<Login/>} path={"/login"}/>
-                <Route element={<Create/>} path={"/create"}/>
+                <Route element={<SignUp/>} path={"/signup"}/>
+                <Route element={<ListSearchMovie/>} path={"/list"}/>
+                <Route element={<ListSearchAuthor/>} path={"/list/author/:id"}/>
+                <Route element={<Movie/>} path={"/movie/:id"}/>
+                <Route element={<Detail/>} path={"/detail/:id"}/>
 
             </Routes>
+            <Footer/>
         </BrowserRouter>
 
-        <Footer/>
+
     </React.StrictMode>
 );
 

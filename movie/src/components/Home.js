@@ -1,1150 +1,268 @@
+import {useEffect, useState} from "react";
+import {getTop10MovieNew, getTop6MovieCartoon} from "../services/movieService";
+import {useNavigate} from "react-router";
+import {Link} from "react-router-dom";
+
 export default function Home() {
+    const [movieNew, setMovieNew] = useState([])
+    const [movieCartoon, setMovieCartoon] = useState([])
+    const navigate = useNavigate();
+    const getTop10New = async () => {
+        setMovieNew(await getTop10MovieNew())
+    }
+    const getTop6Cartoon = async () => {
+        setMovieCartoon(await getTop6MovieCartoon())
+    }
+    useEffect(() => {
+        getTop10New()
 
-
+    }, [])
+    useEffect(() => {
+        getTop6Cartoon()
+    }, [])
+    console.log(movieCartoon);
     return (
         <>
 
-            <meta name="viewport" content="width=device-width, initial-scale=1"/>
-            <meta httpEquiv="Content-Type" content="text/html; charset=utf-8"/>
-            <meta
-                name="keywords"
-                content="Movies Pro Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design"
-            />
+            <section className="hero">
+                <div className="container">
+                    <div className="hero__slider owl-carousel">
 
-            {/*//web-fonts*/}
-            {/*/main-header*/}
-            {/*/banner-section*/}
-
-
-            <div className="w3_content_agilleinfo_inner">
-                <div className="agile_featured_movies">
-                    {/*/agileinfo_tabs*/}
-
-                    {/*//tab-section*/}
-
-                    {/*/movies*/}
-
-                    {/*//movies*/}
-                    <h3 className="agile_w3_title">
-                        Requested <span>Movies</span>{" "}
-                    </h3>
-                    {/*/requested-movies*/}
-                    <div className="wthree_agile-requested-movies">
-                        <div className="col-md-2 w3l-movie-gride-agile requested-movies">
-                            <a href="single.html" className="hvr-sweep-to-bottom">
-                                <img
-                                    src="images/m1.jpg"
-                                    title="Movies Pro"
-                                    className="img-responsive"
-                                    alt=" "
-                                />
-                                <div className="w3l-action-icon">
-                                    <i className="fa fa-play-circle-o" aria-hidden="true"/>
-                                </div>
-                            </a>
-                            <div className="mid-1 agileits_w3layouts_mid_1_home">
-                                <div className="w3l-movie-text">
-                                    <h6>
-                                        <a href="single.html">Swiss Army Man</a>
-                                    </h6>
-                                </div>
-                                <div className="mid-2 agile_mid_2_home">
-                                    <p>2016</p>
-                                    <div className="block-stars">
-                                        <ul className="w3l-ratings">
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                        </ul>
+                        <div className="hero__items set-bg" data-setbg="img/hero/hero-1.jpg">
+                            <div className="row">
+                                <div className="col-lg-6">
+                                    <div className="hero__text">
+                                        <div className="label">Adventure</div>
+                                        <h2>Fate / Stay Night: Unlimited Blade Works</h2>
+                                        <p>After 30 days of travel across the world...</p>
+                                        <a href="#"><span>Watch Now</span> <i className="fa fa-angle-right"></i></a>
                                     </div>
-                                    <div className="clearfix"/>
                                 </div>
-                            </div>
-                            <div className="ribben one">
-                                <p>NEW</p>
                             </div>
                         </div>
-                        <div className="col-md-2 w3l-movie-gride-agile requested-movies">
-                            <a href="single.html" className="hvr-sweep-to-bottom">
-                                <img
-                                    src="images/m2.jpg"
-                                    title="Movies Pro"
-                                    className="img-responsive"
-                                    alt=" "
-                                />
-                                <div className="w3l-action-icon">
-                                    <i className="fa fa-play-circle-o" aria-hidden="true"/>
-                                </div>
-                            </a>
-                            <div className="mid-1 agileits_w3layouts_mid_1_home">
-                                <div className="w3l-movie-text">
-                                    <h6>
-                                        <a href="single.html">Me Before you</a>
-                                    </h6>
-                                </div>
-                                <div className="mid-2 agile_mid_2_home">
-                                    <p>2016</p>
-                                    <div className="block-stars">
-                                        <ul className="w3l-ratings">
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                        </ul>
+                        <div className="hero__items set-bg" data-setbg="img/hero/hero-1.jpg">
+                            <div className="row">
+                                <div className="col-lg-6">
+                                    <div className="hero__text">
+                                        <div className="label">Adventure</div>
+                                        <h2>Fate / Stay Night: Unlimited Blade Works</h2>
+                                        <p>After 30 days of travel across the world...</p>
+                                        <a href="#"><span>Watch Now</span> <i className="fa fa-angle-right"></i></a>
                                     </div>
-                                    <div className="clearfix"/>
                                 </div>
-                            </div>
-                            <div className="ribben one">
-                                <p>NEW</p>
                             </div>
                         </div>
-                        <div className="col-md-2 w3l-movie-gride-agile requested-movies">
-                            <a href="single.html" className="hvr-sweep-to-bottom">
-                                <img
-                                    src="images/m3.jpg"
-                                    title="Movies Pro"
-                                    className="img-responsive"
-                                    alt=" "
-                                />
-                                <div className="w3l-action-icon">
-                                    <i className="fa fa-play-circle-o" aria-hidden="true"/>
-                                </div>
-                            </a>
-                            <div className="mid-1 agileits_w3layouts_mid_1_home">
-                                <div className="w3l-movie-text">
-                                    <h6>
-                                        <a href="single.html">Deadpool</a>
-                                    </h6>
-                                </div>
-                                <div className="mid-2 agile_mid_2_home">
-                                    <p>2016</p>
-                                    <div className="block-stars">
-                                        <ul className="w3l-ratings">
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                        </ul>
+                        <div className="hero__items set-bg" data-setbg="img/hero/hero-1.jpg">
+                            <div className="row">
+                                <div className="col-lg-6">
+                                    <div className="hero__text">
+                                        <div className="label">Adventure</div>
+                                        <h2>Fate / Stay Night: Unlimited Blade Works</h2>
+                                        <p>After 30 days of travel across the world...</p>
+                                        <a href="#"><span>Watch Now</span> <i className="fa fa-angle-right"></i></a>
                                     </div>
-                                    <div className="clearfix"/>
                                 </div>
                             </div>
-                            <div className="ribben one">
-                                <p>NEW</p>
-                            </div>
-                        </div>
-                        <div className="col-md-2 w3l-movie-gride-agile requested-movies">
-                            <a href="single.html" className="hvr-sweep-to-bottom">
-                                <img
-                                    src="images/m4.jpg"
-                                    title="Movies Pro"
-                                    className="img-responsive"
-                                    alt=" "
-                                />
-                                <div className="w3l-action-icon">
-                                    <i className="fa fa-play-circle-o" aria-hidden="true"/>
-                                </div>
-                            </a>
-                            <div className="mid-1 agileits_w3layouts_mid_1_home">
-                                <div className="w3l-movie-text">
-                                    <h6>
-                                        <a href="single.html">Rogue One </a>
-                                    </h6>
-                                </div>
-                                <div className="mid-2 agile_mid_2_home">
-                                    <p>2016</p>
-                                    <div className="block-stars">
-                                        <ul className="w3l-ratings">
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="clearfix"/>
-                                </div>
-                            </div>
-                            <div className="ribben one">
-                                <p>NEW</p>
-                            </div>
-                        </div>
-                        <div className="col-md-2 w3l-movie-gride-agile requested-movies">
-                            <a href="single.html" className="hvr-sweep-to-bottom">
-                                <img
-                                    src="images/m5.jpg"
-                                    title="Movies Pro"
-                                    className="img-responsive"
-                                    alt=" "
-                                />
-                                <div className="w3l-action-icon">
-                                    <i className="fa fa-play-circle-o" aria-hidden="true"/>
-                                </div>
-                            </a>
-                            <div className="mid-1 agileits_w3layouts_mid_1_home">
-                                <div className="w3l-movie-text">
-                                    <h6>
-                                        <a href="single.html">Storks </a>
-                                    </h6>
-                                </div>
-                                <div className="mid-2 agile_mid_2_home">
-                                    <p>2016</p>
-                                    <div className="block-stars">
-                                        <ul className="w3l-ratings">
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="clearfix"/>
-                                </div>
-                            </div>
-                            <div className="ribben one">
-                                <p>NEW</p>
-                            </div>
-                        </div>
-                        <div className="col-md-2 w3l-movie-gride-agile requested-movies">
-                            <a href="single.html" className="hvr-sweep-to-bottom">
-                                <img
-                                    src="images/m6.jpg"
-                                    title="Movies Pro"
-                                    className="img-responsive"
-                                    alt=" "
-                                />
-                                <div className="w3l-action-icon">
-                                    <i className="fa fa-play-circle-o" aria-hidden="true"/>
-                                </div>
-                            </a>
-                            <div className="mid-1 agileits_w3layouts_mid_1_home">
-                                <div className="w3l-movie-text">
-                                    <h6>
-                                        <a href="single.html">Hopeless</a>
-                                    </h6>
-                                </div>
-                                <div className="mid-2 agile_mid_2_home">
-                                    <p>2016</p>
-                                    <div className="block-stars">
-                                        <ul className="w3l-ratings">
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="clearfix"/>
-                                </div>
-                            </div>
-                            <div className="ribben one">
-                                <p>NEW</p>
-                            </div>
-                        </div>
-                        <div className="col-md-2 w3l-movie-gride-agile requested-movies">
-                            <a href="single.html" className="hvr-sweep-to-bottom">
-                                <img
-                                    src="images/m7.jpg"
-                                    title="Movies Pro"
-                                    className="img-responsive"
-                                    alt=" "
-                                />
-                                <div className="w3l-action-icon">
-                                    <i className="fa fa-play-circle-o" aria-hidden="true"/>
-                                </div>
-                            </a>
-                            <div className="mid-1 agileits_w3layouts_mid_1_home">
-                                <div className="w3l-movie-text">
-                                    <h6>
-                                        <a href="single.html">Mechanic</a>
-                                    </h6>
-                                </div>
-                                <div className="mid-2 agile_mid_2_home">
-                                    <p>2016</p>
-                                    <div className="block-stars">
-                                        <ul className="w3l-ratings">
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="clearfix"/>
-                                </div>
-                            </div>
-                            <div className="ribben one">
-                                <p>NEW</p>
-                            </div>
-                        </div>
-                        <div className="col-md-2 w3l-movie-gride-agile requested-movies">
-                            <a href="single.html" className="hvr-sweep-to-bottom">
-                                <img
-                                    src="images/m8.jpg"
-                                    title="Movies Pro"
-                                    className="img-responsive"
-                                    alt=" "
-                                />
-                                <div className="w3l-action-icon">
-                                    <i className="fa fa-play-circle-o" aria-hidden="true"/>
-                                </div>
-                            </a>
-                            <div className="mid-1 agileits_w3layouts_mid_1_home">
-                                <div className="w3l-movie-text">
-                                    <h6>
-                                        <a href="single.html">Timeless</a>
-                                    </h6>
-                                </div>
-                                <div className="mid-2 agile_mid_2_home">
-                                    <p>2016</p>
-                                    <div className="block-stars">
-                                        <ul className="w3l-ratings">
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="clearfix"/>
-                                </div>
-                            </div>
-                            <div className="ribben one">
-                                <p>NEW</p>
-                            </div>
-                        </div>
-                        <div className="col-md-2 w3l-movie-gride-agile requested-movies">
-                            <a href="single.html" className="hvr-sweep-to-bottom">
-                                <img
-                                    src="images/m9.jpg"
-                                    title="Movies Pro"
-                                    className="img-responsive"
-                                    alt=" "
-                                />
-                                <div className="w3l-action-icon">
-                                    <i className="fa fa-play-circle-o" aria-hidden="true"/>
-                                </div>
-                            </a>
-                            <div className="mid-1 agileits_w3layouts_mid_1_home">
-                                <div className="w3l-movie-text">
-                                    <h6>
-                                        <a href="single.html">Inferno</a>
-                                    </h6>
-                                </div>
-                                <div className="mid-2 agile_mid_2_home">
-                                    <p>2016</p>
-                                    <div className="block-stars">
-                                        <ul className="w3l-ratings">
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="clearfix"/>
-                                </div>
-                            </div>
-                            <div className="ribben one">
-                                <p>NEW</p>
-                            </div>
-                        </div>
-                        <div className="col-md-2 w3l-movie-gride-agile requested-movies">
-                            <a href="single.html" className="hvr-sweep-to-bottom">
-                                <img
-                                    src="images/m11.jpg"
-                                    title="Movies Pro"
-                                    className="img-responsive"
-                                    alt=" "
-                                />
-                                <div className="w3l-action-icon">
-                                    <i className="fa fa-play-circle-o" aria-hidden="true"/>
-                                </div>
-                            </a>
-                            <div className="mid-1 agileits_w3layouts_mid_1_home">
-                                <div className="w3l-movie-text">
-                                    <h6>
-                                        <a href="single.html">Warcraft</a>
-                                    </h6>
-                                </div>
-                                <div className="mid-2 agile_mid_2_home">
-                                    <p>2016</p>
-                                    <div className="block-stars">
-                                        <ul className="w3l-ratings">
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i className="fa fa-star-o" aria-hidden="true"/>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="clearfix"/>
-                                </div>
-                            </div>
-                            <div className="ribben one">
-                                <p>NEW</p>
-                            </div>
-                        </div>
-                        <div className="clearfix"/>
-                    </div>
-                    {/*//requested-movies*/}
-                    {/*/top-movies*/}
-                    <h3 className="agile_w3_title">
-                        Top<span>Movies</span>{" "}
-                    </h3>
-                    <div className="top_movies">
-                        <div className="tab_movies_agileinfo">
-                            <div className="w3_agile_featured_movies two">
-                                <div className="col-md-7 wthree_agile-movies_list second-top">
-                                    <div className="w3l-movie-gride-agile">
-                                        <a href="single.html" className="hvr-sweep-to-bottom">
-                                            <img
-                                                src="images/m1.jpg"
-                                                title="Movies Pro"
-                                                className="img-responsive"
-                                                alt=" "
-                                            />
-                                            <div className="w3l-action-icon">
-                                                <i className="fa fa-play-circle-o" aria-hidden="true"/>
-                                            </div>
-                                        </a>
-                                        <div className="mid-1 agileits_w3layouts_mid_1_home">
-                                            <div className="w3l-movie-text">
-                                                <h6>
-                                                    <a href="single.html">Swiss Army Man</a>
-                                                </h6>
-                                            </div>
-                                            <div className="mid-2 agile_mid_2_home">
-                                                <p>2016</p>
-                                                <div className="block-stars">
-                                                    <ul className="w3l-ratings">
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div className="clearfix"/>
-                                            </div>
-                                        </div>
-                                        <div className="ribben">
-                                            <p>NEW</p>
-                                        </div>
-                                    </div>
-                                    <div className="w3l-movie-gride-agile">
-                                        <a href="single.html" className="hvr-sweep-to-bottom">
-                                            <img
-                                                src="images/m2.jpg"
-                                                title="Movies Pro"
-                                                className="img-responsive"
-                                                alt=" "
-                                            />
-                                            <div className="w3l-action-icon">
-                                                <i className="fa fa-play-circle-o" aria-hidden="true"/>
-                                            </div>
-                                        </a>
-                                        <div className="mid-1 agileits_w3layouts_mid_1_home">
-                                            <div className="w3l-movie-text">
-                                                <h6>
-                                                    <a href="single.html">Me Before you</a>
-                                                </h6>
-                                            </div>
-                                            <div className="mid-2 agile_mid_2_home">
-                                                <p>2016</p>
-                                                <div className="block-stars">
-                                                    <ul className="w3l-ratings">
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div className="clearfix"/>
-                                            </div>
-                                        </div>
-                                        <div className="ribben">
-                                            <p>NEW</p>
-                                        </div>
-                                    </div>
-                                    <div className="w3l-movie-gride-agile">
-                                        <a href="single.html" className="hvr-sweep-to-bottom">
-                                            <img
-                                                src="images/m3.jpg"
-                                                title="Movies Pro"
-                                                className="img-responsive"
-                                                alt=" "
-                                            />
-                                            <div className="w3l-action-icon">
-                                                <i className="fa fa-play-circle-o" aria-hidden="true"/>
-                                            </div>
-                                        </a>
-                                        <div className="mid-1 agileits_w3layouts_mid_1_home">
-                                            <div className="w3l-movie-text">
-                                                <h6>
-                                                    <a href="single.html">Deadpool</a>
-                                                </h6>
-                                            </div>
-                                            <div className="mid-2 agile_mid_2_home">
-                                                <p>2016</p>
-                                                <div className="block-stars">
-                                                    <ul className="w3l-ratings">
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div className="clearfix"/>
-                                            </div>
-                                        </div>
-                                        <div className="ribben">
-                                            <p>NEW</p>
-                                        </div>
-                                    </div>
-                                    <div className="w3l-movie-gride-agile">
-                                        <a href="single.html" className="hvr-sweep-to-bottom">
-                                            <img
-                                                src="images/m4.jpg"
-                                                title="Movies Pro"
-                                                className="img-responsive"
-                                                alt=" "
-                                            />
-                                            <div className="w3l-action-icon">
-                                                <i className="fa fa-play-circle-o" aria-hidden="true"/>
-                                            </div>
-                                        </a>
-                                        <div className="mid-1 agileits_w3layouts_mid_1_home">
-                                            <div className="w3l-movie-text">
-                                                <h6>
-                                                    <a href="single.html">Rogue One </a>
-                                                </h6>
-                                            </div>
-                                            <div className="mid-2 agile_mid_2_home">
-                                                <p>2016</p>
-                                                <div className="block-stars">
-                                                    <ul className="w3l-ratings">
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div className="clearfix"/>
-                                            </div>
-                                        </div>
-                                        <div className="ribben">
-                                            <p>NEW</p>
-                                        </div>
-                                    </div>
-                                    <div className="w3l-movie-gride-agile">
-                                        <a href="single.html" className="hvr-sweep-to-bottom">
-                                            <img
-                                                src="images/m5.jpg"
-                                                title="Movies Pro"
-                                                className="img-responsive"
-                                                alt=" "
-                                            />
-                                            <div className="w3l-action-icon">
-                                                <i className="fa fa-play-circle-o" aria-hidden="true"/>
-                                            </div>
-                                        </a>
-                                        <div className="mid-1 agileits_w3layouts_mid_1_home">
-                                            <div className="w3l-movie-text">
-                                                <h6>
-                                                    <a href="single.html">Storks </a>
-                                                </h6>
-                                            </div>
-                                            <div className="mid-2 agile_mid_2_home">
-                                                <p>2016</p>
-                                                <div className="block-stars">
-                                                    <ul className="w3l-ratings">
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div className="clearfix"/>
-                                            </div>
-                                        </div>
-                                        <div className="ribben">
-                                            <p>NEW</p>
-                                        </div>
-                                    </div>
-                                    <div className="w3l-movie-gride-agile">
-                                        <a href="single.html" className="hvr-sweep-to-bottom">
-                                            <img
-                                                src="images/m6.jpg"
-                                                title="Movies Pro"
-                                                className="img-responsive"
-                                                alt=" "
-                                            />
-                                            <div className="w3l-action-icon">
-                                                <i className="fa fa-play-circle-o" aria-hidden="true"/>
-                                            </div>
-                                        </a>
-                                        <div className="mid-1 agileits_w3layouts_mid_1_home">
-                                            <div className="w3l-movie-text">
-                                                <h6>
-                                                    <a href="single.html">Hopeless</a>
-                                                </h6>
-                                            </div>
-                                            <div className="mid-2 agile_mid_2_home">
-                                                <p>2016</p>
-                                                <div className="block-stars">
-                                                    <ul className="w3l-ratings">
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div className="clearfix"/>
-                                            </div>
-                                        </div>
-                                        <div className="ribben">
-                                            <p>NEW</p>
-                                        </div>
-                                    </div>
-                                    <div className="w3l-movie-gride-agile">
-                                        <a href="single.html" className="hvr-sweep-to-bottom">
-                                            <img
-                                                src="images/m7.jpg"
-                                                title="Movies Pro"
-                                                className="img-responsive"
-                                                alt=" "
-                                            />
-                                            <div className="w3l-action-icon">
-                                                <i className="fa fa-play-circle-o" aria-hidden="true"/>
-                                            </div>
-                                        </a>
-                                        <div className="mid-1 agileits_w3layouts_mid_1_home">
-                                            <div className="w3l-movie-text">
-                                                <h6>
-                                                    <a href="single.html">Mechanic</a>
-                                                </h6>
-                                            </div>
-                                            <div className="mid-2 agile_mid_2_home">
-                                                <p>2016</p>
-                                                <div className="block-stars">
-                                                    <ul className="w3l-ratings">
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div className="clearfix"/>
-                                            </div>
-                                        </div>
-                                        <div className="ribben">
-                                            <p>NEW</p>
-                                        </div>
-                                    </div>
-                                    <div className="w3l-movie-gride-agile">
-                                        <a href="single.html" className="hvr-sweep-to-bottom">
-                                            <img
-                                                src="images/m8.jpg"
-                                                title="Movies Pro"
-                                                className="img-responsive"
-                                                alt=" "
-                                            />
-                                            <div className="w3l-action-icon">
-                                                <i className="fa fa-play-circle-o" aria-hidden="true"/>
-                                            </div>
-                                        </a>
-                                        <div className="mid-1 agileits_w3layouts_mid_1_home">
-                                            <div className="w3l-movie-text">
-                                                <h6>
-                                                    <a href="single.html">Timeless</a>
-                                                </h6>
-                                            </div>
-                                            <div className="mid-2 agile_mid_2_home">
-                                                <p>2016</p>
-                                                <div className="block-stars">
-                                                    <ul className="w3l-ratings">
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div className="clearfix"/>
-                                            </div>
-                                        </div>
-                                        <div className="ribben">
-                                            <p>NEW</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-md-5 video_agile_player second-top">
-                                    <div className="video-grid-single-page-agileits">
-                                        <div data-video="BXEZFd0RT5Y" id="video3">
-                                            {" "}
-                                            <img
-                                                src="images/44.jpg"
-                                                alt=""
-                                                className="img-responsive"
-                                            />{" "}
-                                        </div>
-                                    </div>
-                                    <div className="player-text two">
-                                        <p className="fexi_header">Storks </p>
-                                        <p className="fexi_header_para">
-                  <span className="conjuring_w3">
-                    Story Line<label>:</label>
-                  </span>
-                                            Starring: Andy Samberg, Jennifer Aniston, Ty Burrell Storks
-                                            Official Trailer 3 (2016) - Andy Samberg Movie the company's
-                                            top delivery stork, lands in hot water when the Baby Factory
-                                            produces an adorable.......{" "}
-                                        </p>
-                                        <p className="fexi_header_para">
-                  <span>
-                    Release On<label>:</label>
-                  </span>
-                                            Aug 1, 2016{" "}
-                                        </p>
-                                        <p className="fexi_header_para">
-                  <span>
-                    Genres<label>:</label>{" "}
-                  </span>
-                                            <a href="genre.html">Drama</a> |
-                                            <a href="genre.html">Adventure</a> |
-                                            <a href="genre.html">Family</a>
-                                        </p>
-                                        <p className="fexi_header_para fexi_header_para1">
-                  <span>
-                    Star Rating<label>:</label>
-                  </span>
-                                            <a href="#">
-                                                <i className="fa fa-star" aria-hidden="true"/>
-                                            </a>
-                                            <a href="#">
-                                                <i className="fa fa-star" aria-hidden="true"/>
-                                            </a>
-                                            <a href="#">
-                                                <i className="fa fa-star-half-o" aria-hidden="true"/>
-                                            </a>
-                                            <a href="#">
-                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                            </a>
-                                            <a href="#">
-                                                <i className="fa fa-star-o" aria-hidden="true"/>
-                                            </a>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="clearfix"></div>
-                            </div>
-                            <div className="cleafix"/>
                         </div>
                     </div>
-                    {/*//top-movies*/}
                 </div>
-            </div>
-            {/*//content-inner-section*/}
-            {/*/footer-bottom*/}
+            </section>
 
-            <a href="#home" id="toTop" className="scroll" style={{display: "block"}}>
-                {" "}
-                <span id="toTopHover" style={{opacity: 1}}>
-      {" "}
-    </span>
-            </a>
-            {/* Dropdown-Menu-JavaScript */}
-            {/* //Dropdown-Menu-JavaScript */}
-            {/* search-jQuery */}
-            {/* pop-up-box */}
-            {/*//pop-up-box */}
-            <div id="small-dialog1" className="mfp-hide">
-                <iframe src="https://player.vimeo.com/video/165197924?color=ffffff&title=0&byline=0&portrait=0"/>
-            </div>
-            <div id="small-dialog2" className="mfp-hide">
-                <iframe src="https://player.vimeo.com/video/165197924?color=ffffff&title=0&byline=0&portrait=0"/>
-            </div>
-            <link
-                href="css/owl.carousel.css"
-                rel="stylesheet"
-                type="text/css"
-                media="all"
-            />
-            {/*/script*/}
-            {/*end-smooth-scrolling*/}
+            <section className="product spad">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-8">
+                            <div className="trending__product">
+
+
+                                <div className="row">
+                                    <div className="col-lg-8 col-md-8 col-sm-8">
+                                        <div className="section-title">
+                                            <h4>Phim mới</h4>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4 col-md-4 col-sm-4">
+                                        <div className="btn__all">
+                                            <Link to={"/list"} className="primary-btn">Tất cả
+                                                <span className="arrow_right"></span></Link>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    {movieNew &&
+                                    movieNew.map((item, index) =>
+                                        <div className="col-lg-4 col-md-6 col-sm-6" title={item.name}>
+                                            <div className="product__item" onClick={() => {
+                                                navigate(`/detail/${item.id}`)
+                                            }}>
+                                                <div className="product__item__pic set-bg">
+                                                    <img src={item.img} alt=""/>
+                                                    <div className="ep">mới</div>
+
+                                                </div>
+                                                <div className="product__item__text">
+                                                    <h5><a href="#">{item.name}</a></h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                    }
+
+
+                                </div>
+                            </div>
+                            <div className="popular__product">
+                                <div className="row">
+                                    <div className="col-lg-8 col-md-8 col-sm-8">
+                                        <div className="section-title">
+                                            <h4>Hoạt hình</h4>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4 col-md-4 col-sm-4">
+                                        <div className="btn__all">
+                                            <Link to={"/list"} className="primary-btn">Tất cả
+                                                <span className="arrow_right"></span></Link>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    {movieCartoon &&
+                                        movieCartoon.map((item,index)=>
+                                            <div className="col-lg-4 col-md-6 col-sm-6">
+                                                <div className="product__item"
+                                                     onClick={() => {
+                                                         navigate(`/detail/${item.id}`)}
+                                                     }
+                                                >
+                                                    <div className="product__item__pic set-bg"
+                                                         data-setbg="img/popular/popular-1.jpg">
+                                                        <img src={item.img} alt=""/>
+                                                        <div className="ep">Hoạt hình</div>
+                                                    </div>
+                                                    <div className="product__item__text">
+                                                        <ul>
+                                                            <li>Active</li>
+                                                            <li>Movie</li>
+                                                        </ul>
+                                                        <h5><a href="#">Sen to Chihiro no Kamikakushi</a></h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )
+
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                        <div className="col-lg-4 col-md-6 col-sm-8">
+                            <div className="product__sidebar">
+                                <div className="product__sidebar__view">
+                                    <div className="section-title">
+                                        <h5>Top Views</h5>
+                                    </div>
+                                    <ul className="filter__controls">
+                                        <li className="active" data-filter="*">Day</li>
+                                        <li data-filter=".week">Week</li>
+                                        <li data-filter=".month">Month</li>
+                                        <li data-filter=".years">Years</li>
+                                    </ul>
+                                    <div className="filter__gallery">
+                                        <div className="product__sidebar__view__item set-bg mix day years"
+                                             data-setbg="img/sidebar/tv-1.jpg">
+                                            <div className="ep">18 / ?</div>
+                                            <div className="view"><i className="fa fa-eye"></i> 9141</div>
+                                            <h5><a href="#">Boruto: Naruto next generations</a></h5>
+                                        </div>
+                                        <div className="product__sidebar__view__item set-bg mix month week"
+                                             data-setbg="img/sidebar/tv-2.jpg">
+                                            <div className="ep">18 / ?</div>
+                                            <div className="view"><i className="fa fa-eye"></i> 9141</div>
+                                            <h5><a href="#">The Seven Deadly Sins: Wrath of the Gods</a></h5>
+                                        </div>
+                                        <div className="product__sidebar__view__item set-bg mix week years"
+                                             data-setbg="img/sidebar/tv-3.jpg">
+                                            <div className="ep">18 / ?</div>
+                                            <div className="view"><i className="fa fa-eye"></i> 9141</div>
+                                            <h5><a href="#">Sword art online alicization war of underworld</a></h5>
+                                        </div>
+                                        <div className="product__sidebar__view__item set-bg mix years month"
+                                             data-setbg="img/sidebar/tv-4.jpg">
+                                            <div className="ep">18 / ?</div>
+                                            <div className="view"><i className="fa fa-eye"></i> 9141</div>
+                                            <h5><a href="#">Fate/stay night: Heaven's Feel I. presage flower</a></h5>
+                                        </div>
+                                        <div className="product__sidebar__view__item set-bg mix day"
+                                             data-setbg="img/sidebar/tv-5.jpg">
+                                            <div className="ep">18 / ?</div>
+                                            <div className="view"><i className="fa fa-eye"></i> 9141</div>
+                                            <h5><a href="#">Fate stay night unlimited blade works</a></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="product__sidebar__comment">
+                                    <div className="section-title">
+                                        <h5>New Comment</h5>
+                                    </div>
+                                    <div className="product__sidebar__comment__item">
+                                        <div className="product__sidebar__comment__item__pic">
+                                            <img src="img/sidebar/comment-1.jpg" alt=""/>
+                                        </div>
+                                        <div className="product__sidebar__comment__item__text">
+                                            <ul>
+                                                <li>Active</li>
+                                                <li>Movie</li>
+                                            </ul>
+                                            <h5><a href="#">The Seven Deadly Sins: Wrath of the Gods</a></h5>
+                                            <span><i className="fa fa-eye"></i> 19.141 Viewes</span>
+                                        </div>
+                                    </div>
+                                    <div className="product__sidebar__comment__item">
+                                        <div className="product__sidebar__comment__item__pic">
+                                            <img src="img/sidebar/comment-2.jpg" alt=""/>
+                                        </div>
+                                        <div className="product__sidebar__comment__item__text">
+                                            <ul>
+                                                <li>Active</li>
+                                                <li>Movie</li>
+                                            </ul>
+                                            <h5><a href="#">Shirogane Tamashii hen Kouhan sen</a></h5>
+                                            <span><i className="fa fa-eye"></i> 19.141 Viewes</span>
+                                        </div>
+                                    </div>
+                                    <div className="product__sidebar__comment__item">
+                                        <div className="product__sidebar__comment__item__pic">
+                                            <img src="img/sidebar/comment-3.jpg" alt=""/>
+                                        </div>
+                                        <div className="product__sidebar__comment__item__text">
+                                            <ul>
+                                                <li>Active</li>
+                                                <li>Movie</li>
+                                            </ul>
+                                            <h5><a href="#">Kizumonogatari III: Reiket su-hen</a></h5>
+                                            <span><i className="fa fa-eye"></i> 19.141 Viewes</span>
+                                        </div>
+                                    </div>
+                                    <div className="product__sidebar__comment__item">
+                                        <div className="product__sidebar__comment__item__pic">
+                                            <img src="img/sidebar/comment-4.jpg" alt=""/>
+                                        </div>
+                                        <div className="product__sidebar__comment__item__text">
+                                            <ul>
+                                                <li>Active</li>
+                                                <li>Movie</li>
+                                            </ul>
+                                            <h5><a href="#">Monogatari Series: Second Season</a></h5>
+                                            <span><i className="fa fa-eye"></i> 19.141 Viewes</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </>
 
 

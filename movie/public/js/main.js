@@ -1,100 +1,101 @@
-jQuery(document).ready(function($){
-	//if you change this breakpoint in the style.css file (or _layout.scss if you use SASS), don't forget to update this value as well
-	var MqL = 1170;
-	//move nav element position according to window width
-	moveNavigation();
-	$(window).on('resize', function(){
-		(!window.requestAnimationFrame) ? setTimeout(moveNavigation, 300) : window.requestAnimationFrame(moveNavigation);
-	});
+/*  ---------------------------------------------------
+    Theme Name: Anime
+    Description: Anime video tamplate
+    Author: Colorib
+    Author URI: https://colorib.com/
+    Version: 1.0
+    Created: Colorib
+---------------------------------------------------------  */
 
-	//mobile - open lateral menu clicking on the menu icon
-	$('.cd-nav-trigger').on('click', function(event){
-		event.preventDefault();
-		if( $('.cd-main-content').hasClass('nav-is-visible') ) {
-			closeNav();
-			$('.cd-overlay').removeClass('is-visible');
-		} else {
-			$(this).addClass('nav-is-visible');
-			$('.cd-main-header').addClass('nav-is-visible');
-			$('.cd-main-content').addClass('nav-is-visible').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(){
-				$('body').addClass('overflow-hidden');
-			});
-			toggleSearch('close');
-			$('.cd-overlay').addClass('is-visible');
-		}
-	});
+'use strict';
 
-	//open search form
-	$('.cd-search-trigger').on('click', function(event){
-		event.preventDefault();
-		toggleSearch();
-		closeNav();
-	});
+(function ($) {
 
-	
-	
-	
+    /*------------------
+        Preloader
+    --------------------*/
+    $(window).on('load', function () {
+        $(".loader").fadeOut();
+        $("#preloder").delay(200).fadeOut("slow");
 
-
-	
-
-	//submenu items - go back link
-	$('.go-back').on('click', function(){
-		$(this).parent('ul').addClass('is-hidden').parent('.has-children').parent('ul').removeClass('moves-out');
-	});
-
-	function closeNav() {
-		$('.cd-nav-trigger').removeClass('nav-is-visible');
-		$('.cd-main-header').removeClass('nav-is-visible');
-		$('.cd-primary-nav').removeClass('nav-is-visible');
-		$('.has-children ul').addClass('is-hidden');
-		$('.has-children a').removeClass('selected');
-		$('.moves-out').removeClass('moves-out');
-		$('.cd-main-content').removeClass('nav-is-visible').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(){
-			$('body').removeClass('overflow-hidden');
-		});
-	}
-
-	function toggleSearch(type) {
-		if(type=="close") {
-			//close serach 
-			$('.cd-search').removeClass('is-visible');
-			$('.cd-search-trigger').removeClass('search-is-visible');
-			$('.cd-overlay').removeClass('search-is-visible');
-		} else {
-			//toggle search visibility
-			$('.cd-search').toggleClass('is-visible');
-			$('.cd-search-trigger').toggleClass('search-is-visible');
-			$('.cd-overlay').toggleClass('search-is-visible');
-			if($(window).width() > MqL && $('.cd-search').hasClass('is-visible')) $('.cd-search').find('input[type="search"]').focus();
-			($('.cd-search').hasClass('is-visible')) ? $('.cd-overlay').addClass('is-visible') : $('.cd-overlay').removeClass('is-visible') ;
-		}
-	}
-
-	function checkWindowWidth() {
-		//check window width (scrollbar included)
-		var e = window, 
-            a = 'inner';
-        if (!('innerWidth' in window )) {
-            a = 'client';
-            e = document.documentElement || document.body;
+        /*------------------
+            FIlter
+        --------------------*/
+        $('.filter__controls li').on('click', function () {
+            $('.filter__controls li').removeClass('active');
+            $(this).addClass('active');
+        });
+        if ($('.filter__gallery').length > 0) {
+            var containerEl = document.querySelector('.filter__gallery');
+            var mixer = mixitup(containerEl);
         }
-        if ( e[ a+'Width' ] >= MqL ) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    });
 
-	function moveNavigation(){
-		var navigation = $('.cd-nav');
-  		var desktop = checkWindowWidth();
-        if ( desktop ) {
-			navigation.detach();
-			navigation.insertBefore('.cd-header-buttons');
-		} else {
-			navigation.detach();
-			navigation.insertAfter('.cd-main-content');
-		}
-	}
-});
+    /*------------------
+        Background Set
+    --------------------*/
+    $('.set-bg').each(function () {
+        var bg = $(this).data('setbg');
+        $(this).css('background-image', 'url(' + bg + ')');
+    });
+
+    // Search model
+    $('.search-switch').on('click', function () {
+        $('.search-model').fadeIn(400);
+    });
+
+    $('.search-close-switch').on('click', function () {
+        $('.search-model').fadeOut(400, function () {
+            $('#search-input').val('');
+        });
+    });
+
+    /*------------------
+		Navigation
+	--------------------*/
+    $(".mobile-menu").slicknav({
+        prependTo: '#mobile-menu-wrap',
+        allowParentLinks: true
+    });
+
+    /*------------------
+		Hero Slider
+	--------------------*/
+    var hero_s = $(".hero__slider");
+    hero_s.owlCarousel({
+        loop: true,
+        margin: 0,
+        items: 1,
+        dots: true,
+        nav: true,
+        navText: ["<span class='arrow_carrot-left'></span>", "<span class='arrow_carrot-right'></span>"],
+        animateOut: 'fadeOut',
+        animateIn: 'fadeIn',
+        smartSpeed: 1200,
+        autoHeight: false,
+        autoplay: true,
+        mouseDrag: false
+    });
+
+    /*------------------
+        Video Player
+    --------------------*/
+    const player = new Plyr('#player', {
+        controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'captions', 'settings', 'fullscreen'],
+        seekTime: 25
+    });
+
+    /*------------------
+        Niceselect
+    --------------------*/
+    $('select').niceSelect();
+
+    /*------------------
+        Scroll To Top
+    --------------------*/
+    $("#scrollToTopButton").click(function() {
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+        return false;
+     });
+
+})(jQuery);

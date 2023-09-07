@@ -1,47 +1,94 @@
-export default function Login(){
-return(
-    <div>
-        <title>Login 10</title>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet" />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-        <link rel="stylesheet" href="movie/public/css/style.css" />
-        <div className="container">
-            <div className="screen">
-                <div className="screen__content">
-                    <form className="login">
-                        <div className="login__field">
-                            <i className="login__icon fas fa-user" />
-                            <input type="text" className="login__input" placeholder="User name / Email" />
-                        </div>
-                        <div className="login__field">
-                            <i className="login__icon fas fa-lock" />
-                            <input type="password" className="login__input" placeholder="Password" />
-                        </div>
-                        <button className="button login__submit">
-                            <span className="button__text">Log In Now</span>
-                            <i className="button__icon fas fa-chevron-right" />
-                        </button>
-                    </form>
-                    <div className="social-login">
-                        <h3>log in via</h3>
-                        <div className="social-icons">
-                            <a href="#" className="social-login__icon fab fa-instagram" />
-                            <a href="#" className="social-login__icon fab fa-facebook" />
-                            <a href="#" className="social-login__icon fab fa-twitter" />
+import {Link} from "react-router-dom";
+import {Formik, Field, Form} from "formik";
+import {loginCustomer} from "../services/loginService";
+import {useNavigate} from "react-router";
+import Swal from "sweetalert2";
+
+export default function Login() {
+
+    const navigate = useNavigate();
+    const loginFunction = async (email, password) => {
+        try {
+          const customer=  await loginCustomer(email, password)
+            localStorage.setItem("token",customer.token);
+            Swal.fire({
+                icon: "success",
+                timer: 2000,
+                title: "Đăng nhập thành công!"
+            }).then( navigate("/"))
+        }catch (a){
+            Swal.fire({
+                icon: "error",
+                timer: 2000,
+                title: "Đăng nhập thất bại!"
+            })
+        }
+
+    }
+    return (
+        <div>
+            <section className="normal-breadcrumb set-bg">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-12 text-center">
+                            <div className="normal__breadcrumb__text">
+                                <h2>Đăng nhập</h2>
+                                <p>Chào mừng bạn đến với <h2 style={{color: '#a20a0f'}}>CONFLIX</h2></p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div className="screen__background">
-                    <span className="screen__background__shape screen__background__shape4" />
-                    <span className="screen__background__shape screen__background__shape3" />
-                    <span className="screen__background__shape screen__background__shape2" />
-                    <span className="screen__background__shape screen__background__shape1" />
+            </section>
+
+            <section className="login spad">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-6">
+                            <div className="login__form">
+                                <Formik initialValues={{
+                                    email: "",
+                                    password: ""
+                                }}
+                                        onSubmit={async (values) => {
+                                            try {
+                                                await loginFunction(values.email, values.password)
+
+                                            } catch (e) {
+                                                Swal.fire({
+                                                    icon: "error",
+                                                    timer: 2000,
+                                                    title: "Đăng nhập thất bại!"
+                                                })
+                                            }
+                                        }}
+                                >
+                                    <Form>
+                                        <div className="input__item">
+                                            <Field type="text" placeholder="abc@gmail.com" name="email"/>
+                                            <span className="icon_mail"></span>
+                                        </div>
+                                        <div className="input__item">
+                                            <Field type="password" placeholder="123456Aaa" name="password"/>
+                                            <span className="icon_lock"></span>
+                                        </div>
+                                        <button type="submit" className="site-btn">Đăng nhập</button>
+                                    </Form>
+                                </Formik>
+                                <a href="#" className="forget_pass">Quên mật khẩu ?</a>
+                            </div>
+                        </div>
+                        <div className="col-lg-6">
+                            <div className="login__register">
+                                <h3>Bạn chưa có tài khoản ?</h3>
+                                <Link to={`/signup`}> <a style={{color: 'white'}} className="primary-btn">Đăng kí
+                                    ngay</a></Link>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </section>
         </div>
-    </div>
-);
+
+    );
 
 }

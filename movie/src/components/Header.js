@@ -1,246 +1,160 @@
-import {useState} from "react";
-import {Link} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {Link, useLocation} from "react-router-dom";
+import Swal from "sweetalert2";
+import {getCategorys, getNations} from "../services/searchService";
+import {getDatabase, ref, child, get} from "firebase/database";
+import {database} from "./MovieFirebase";
+import {getAccountWithToken} from "../services/loginService";
 
 
+const dbRef = ref(database);
+get(child(dbRef, `movie`)).then((snapshot) => {
+    if (snapshot.exists()) {
+    } else {
+        console.log("No data available");
+    }
+}).catch((error) => {
+});
 export default function Header() {
-    const [dropDown,setDropDown]=useState(false);
-    const [dropDown1,setDropDown1]=useState(false);
-    const [dropDown2,setDropDown2]=useState(false);
-    const handleDropDown=()=>{
-        setDropDown(!dropDown);
+    const [nations, setNations] = useState([]);
+    const [categorys, setCategorys] = useState([]);
+    const [token, setToken] = useState("")
+    const [account, setAccount] = useState("");
+    const location = useLocation()
+    useEffect(() => {
+        setAccount(JSON.parse(localStorage.getItem("account")))
+    }, [token])
+    useEffect(() => {
+        getListNations()
+    }, [])
+    useEffect(() => {
+        getListCategorys()
+    }, [])
+    const getTokenPromise = async () => {
+        setToken(localStorage.getItem("token"));
     }
-    const handleDropDown1=()=>{
-        setDropDown1(!dropDown1);
+    useEffect(() => {
+        getTokenPromise()
+    }, [location])
+
+
+    const getToken = async (tokena) => {
+        setAccount(await getAccountWithToken(tokena));
     }
-    const handleDropDown2=()=>{
-        setDropDown2(!dropDown2);
+
+    useEffect(() => {
+        if (token != ''&&token!=null) {
+           getToken(token)
+        }
+    }, [token])
+
+    console.log("token"+token)
+    console.log(account)
+    const getListNations = async () => {
+        setNations(await getNations());
     }
+    const getListCategorys = async () => {
+        setCategorys(await getCategorys());
+    }
+
     return (
-        <div >
-
-
-                    {/*/header-w3l*/}
-                    <div className="header-w3-agileits" id="home">
-                        <div className="inner-header-agile">
-                            <nav className="navbar navbar-default">
-                                <div className="navbar-header">
-                                    <button
-                                        type="button"
-                                        className="navbar-toggle"
-                                        data-toggle="collapse"
-                                        data-target="#bs-example-navbar-collapse-1"
-                                    >
-                                        <span className="sr-only">Toggle navigation</span>
-                                        <span className="icon-bar"/>
-                                        <span className="icon-bar"/>
-                                        <span className="icon-bar"/>
-                                    </button>
-                                    <h1>
-                                        <a href="index.html">
-                                            <span className="logoConflix" >CONFLIX</span>
-                                        </a>
-                                    </h1>
-                                </div>
-                                {/* navbar-header */}
-                                <div
-                                    className="collapse navbar-collapse"
-                                    id="bs-example-navbar-collapse-1"
-                                >
-                                    <ul className="nav navbar-nav">
+        <div>
+            <header className="header">
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-lg-2">
+                            <div className="header__logo">
+                                <Link to="">
+                                    <img src="img/Untitled123.png" alt=""/>
+                                </Link>
+                            </div>
+                        </div>
+                        <div className="col-lg-10">
+                            <div className="header__nav">
+                                <nav className="header__menu mobile-menu">
+                                    <ul>
                                         <li className="active">
-                                            <a href="index.html">Home</a>
+                                            <Link to={""}>Trang chủ</Link>
                                         </li>
-                                        <li className="dropdown">
-                                            <a
-                                                href="#"
-                                                className="dropdown-toggle"
-                                                data-toggle="dropdown"
-                                                onClick={handleDropDown}
-                                            >
-                                                Genre <b className="caret" />
+                                        <li>
+
+                                            <a>
+                                                Thể loại <span className="arrow_carrot-down"/>
                                             </a>
-                                            <ul className="dropdown-menu multi-column columns-3" style={{ display: dropDown ? 'block' : 'none' }}>
-                                                <li>
-                                                    <div className="col-sm-4" >
-                                                        <ul className="multi-column-dropdown" >
-                                                            <li>
-                                                                <a href="genre.html">Action</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">Biography</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">Crime</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">Family</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="horror.html">Horror</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">Romance</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">Sports</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">War</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div className="col-sm-4">
-                                                        <ul className="multi-column-dropdown">
-                                                            <li>
-                                                                <a href="genre.html">Adventure</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="comedy.html">Comedy</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">Documentary</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">Fantasy</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">Thriller</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div className="col-sm-4">
-                                                        <ul className="multi-column-dropdown">
-                                                            <li>
-                                                                <a href="genre.html">Animation</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">Costume</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">Drama</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">History</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">Musical</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">Psychological</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div className="clearfix"/>
-                                                </li>
+                                            <div className="row">
+
+                                                <ul className="dropdown row" style={{width: "600px"}}>
+
+                                                    {categorys &&
+                                                    categorys.map((item, index) =>
+                                                        <li className={"liWidth"}>
+                                                            <span className={"col-lg-12 search_name"}>{item.name}</span>
+                                                        </li>
+                                                    )}
+
+                                                </ul>
+
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a>
+                                                Quốc gia <span className="arrow_carrot-down"/>
+                                            </a>
+                                            <ul className="dropdown row" style={{width: "300px"}}>
+
+                                                {nations &&
+                                                nations.map((item, index) =>
+                                                    <li className={"liWidthNation"}>
+                                                        <span className={"col-lg-12 search_name"}>{item.name}</span>
+                                                    </li>
+                                                )}
+
                                             </ul>
                                         </li>
                                         <li>
-                                            <a href="series.html">tv - series</a>
+                                            <Link to={`/list`}>Tìm kiếm</Link>
                                         </li>
                                         <li>
-                                            <a href="news.html">news</a>
-                                        </li>
-                                        <li className="dropdown">
-                                            <a
-                                                href="#"
-                                                className="dropdown-toggle"
-                                                data-toggle="dropdown"
-                                                onClick={handleDropDown1}
-                                            >
-                                                Country <b className="caret"/>
-                                            </a>
-                                            <ul className="dropdown-menu multi-column columns-3"
-                                                style={{ display: dropDown1 ? 'block' : 'none' }}
-                                             >
-                                                <li>
-                                                    <div className="col-sm-4">
-                                                        <ul className="multi-column-dropdown">
-                                                            <li>
-                                                                <a href="genre.html">Asia</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">France</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">Taiwan</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">United States</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div className="col-sm-4">
-                                                        <ul className="multi-column-dropdown">
-                                                            <li>
-                                                                <a href="genre.html">China</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">HongCong</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">Japan</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">Thailand</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div className="col-sm-4">
-                                                        <ul className="multi-column-dropdown">
-                                                            <li>
-                                                                <a href="genre.html">Euro</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">India</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">Korea</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="genre.html">United Kingdom</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div className="clearfix"/>
-                                                </li>
-                                            </ul>
+                                            <input type="text" className="form-control"
+                                                   placeholder="Ví dụ: Tây du kí ..."/>
                                         </li>
                                         <li>
-                                            <a href="list.html">A - z list</a>
-                                        </li>
-                                        <li>
-                                            {/*<Link to="/login">Đăng kí</Link>*/}
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div className="clearfix"></div>
-                            </nav>
-                            <div className="w3ls_search">
-                                <div className="cd-main-header">
-                                    <ul className="cd-header-buttons">
-                                        <li>
-                                            <a className="cd-search-trigger" href="#cd-search">
-                                                {" "}
-                                                <span/>
+                                            <a href="#" className="search-switch">
+                                                <span className="icon_search"/>
                                             </a>
                                         </li>
+                                        {account ?
+                                            <li onClick={() => {
+                                                localStorage.removeItem("account")
+                                                localStorage.removeItem("token")
+                                                // Swal.fire({
+                                                //     icon: "success",
+                                                //     timer: 2000,
+                                                //     title: "Đăng xuất thành công!"
+                                                // })
+                                            }
+                                            }>
+                                                <Link to="/">
+                                                    <span><i className="fa-solid fa-arrow-right-from-bracket"></i></span>
+                                                    <span>{account.nameAccount}</span>
+                                                </Link>
+                                            </li>
+                                            : <li>
+                                                <Link to="/login">
+                                                    <span className="icon_profile"/><span>Đăng nhập</span>
+                                                </Link>
+                                            </li>
+                                        }
+
+
                                     </ul>
-                                    {" "}
-                                    {/* cd-header-buttons */}
-                                </div>
-                                <div id="cd-search" className="cd-search">
-                                    <form action="#" method="post">
-                                        <input name="Search" type="search" placeholder="Search..."/>
-                                    </form>
-                                </div>
+                                </nav>
                             </div>
                         </div>
                     </div>
-                    {/*//header-w3l*/}
-                    {/*/banner-info*/}
-
-
-
+                    <div id="mobile-menu-wrap"/>
+                </div>
+            </header>
         </div>
     );
 }
