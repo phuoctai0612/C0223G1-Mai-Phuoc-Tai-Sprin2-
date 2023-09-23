@@ -27,6 +27,8 @@ export default function Login() {
     }
     return (
         <div>
+            <title>Đăng nhập</title>
+
             <section className="normal-breadcrumb set-bg">
                 <div className="container">
                     <div className="row">

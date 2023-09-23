@@ -1,9 +1,36 @@
 import {Link} from "react-router-dom";
 import {Formik, Field, Form} from "formik";
 import {signUpCustomer} from "../services/signUpService";
+import {useNavigate} from "react-router";
+import Swal from "sweetalert2";
+
 export default function SignUp() {
+    const navigate = useNavigate();
+    const signupAccount = async (item) => {
+        console.log(item)
+        try {
+            await signUpCustomer(item.email, item.password)
+            Swal.fire({
+                icon: "success",
+                timer: 2000,
+                title: "Đăng kí thành công!",
+                showConfirmButton: false
+            })
+            navigate("/login")
+        } catch (e) {
+            Swal.fire({
+                icon: "error",
+                timer: 2000,
+                title: "Đã có tài khoản này!",
+                showConfirmButton: false
+            })
+        }
+
+    }
     return (
         <div>
+            <title>Đăng kí</title>
+
             <section className="normal-breadcrumb set-bg" data-setbg="img/normal-breadcrumb.jpg">
                 <div className="container">
                     <div className="row">
@@ -27,19 +54,20 @@ export default function SignUp() {
                                         password: ""
                                     }
                                 }
-
-                                        onSubmit={async (values) => {
-                                          await  signUpCustomer(values.email,values.password)
+                                        onSubmit={async (values, {resetForm}) => {
+                                          await signupAccount(values)
+                                            resetForm()
                                         }}
                                 >
                                     <Form>
                                         <div className="input__item">
-                                            <Field type="text" placeholder="abc@gmail.com" name="email"/>
+                                            <Field type="text" placeholder="abc@gmail.com" name="email" id={"email"}/>
                                             <span className="icon_mail"></span>
                                         </div>
 
                                         <div className="input__item">
-                                            <Field type="password" placeholder="123456Aaa" name="password"/>
+                                            <Field type="password" placeholder="123456Aaa" name="password"
+                                                   id={"password"}/>
                                             <span className="icon_lock"></span>
                                         </div>
                                         <button type="submit" className="site-btn">Đăng kí</button>

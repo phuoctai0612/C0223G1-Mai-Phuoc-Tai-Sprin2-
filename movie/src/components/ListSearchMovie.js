@@ -1,24 +1,28 @@
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {getCategorys, getListSearchPlus, getNations} from "../services/searchService";
-import {useNavigate} from "react-router";
+import {getCategorys, getListSearchMovieName, getListSearchPlus, getNations} from "../services/searchService";
+import {useLocation, useNavigate, useParams} from "react-router";
+import Sibar from "./Sidebar";
+import ReactPaginate from "react-paginate";
 
 export default function ListSearchMovie() {
-
+    const param = useParams();
+    const [flag,setFlag]=useState(false);
     const [nations, setNations] = useState([]);
     const [categorys, setCategorys] = useState([]);
     const [listSearchPlus, setListSearchPlus] = useState([]);
     const [categorySearch, setCategorySearch] = useState("");
-    const [nationSearch, setNationSearch] = useState("");
+    const [nationSearch, setNationSearch] = useState(param.nation!=undefined?param.nation:"");
     const [pageSearch, setPageSearch] = useState(0);
     const [yearStartSearch, setYearStartSearch] = useState("");
     const [typeMovieSearch, setTypeMovieSearch] = useState("");
 
-
+    const location = useLocation()
     const getCategorySearch = async (item) => {
         await setCategorySearch(item);
     }
     const getNationSearch = async (item) => {
+
         await setNationSearch(item);
     }
     const getPageSearch = async (item) => {
@@ -33,27 +37,42 @@ export default function ListSearchMovie() {
     const nextPage = async () => {
         const newPage = pageSearch + 1;
         const result = await getListSearchPlus(newPage, typeMovieSearch, categorySearch, nationSearch, yearStartSearch)
-        if (result.length != 0) {
+        if (result.content.length != 0) {
+            window.scrollTo(0, 0)
             await getPageSearch(newPage).then(setListSearchPlus(await getListSearchPlus(newPage, typeMovieSearch, categorySearch, nationSearch, yearStartSearch)))
         }
     }
     const previousPage = async () => {
         const newPage = pageSearch - 1;
         const result = await getListSearchPlus(newPage, typeMovieSearch, categorySearch, nationSearch, yearStartSearch)
-        if (result.length != 0 && newPage >= 0) {
+        if (newPage >= 0) {
+            window.scrollTo(0, 0)
             await getPageSearch(newPage).then(setListSearchPlus(await getListSearchPlus(newPage, typeMovieSearch, categorySearch, nationSearch, yearStartSearch)))
         }
+    }
+    const handlePageChange = async (data) => {
+        window.scrollTo(0,0)
+        await getPageSearch(data.selected).then(setListSearchPlus(await getListSearchPlus(data.selected, typeMovieSearch, categorySearch, nationSearch, yearStartSearch)))
+
     }
     const navigate = useNavigate();
     useEffect(() => {
         getListNations()
-    }, [])
-    useEffect(() => {
         getListCategorys()
-    }, [])
-    useEffect(() => {
+        window.scrollTo(0, 0)
         getListSearch(pageSearch, typeMovieSearch, categorySearch, nationSearch, yearStartSearch)
     }, [])
+    console.log(pageSearch)
+    useEffect(() => {
+        if (param.nation!=undefined){
+            getNationSearch(param.nation)
+        }
+    }, [location])
+    useEffect(() => {
+        getListSearch(pageSearch, typeMovieSearch, categorySearch, nationSearch, yearStartSearch)
+    }, [nationSearch])
+
+
     const getListNations = async () => {
         setNations(await getNations());
     }
@@ -63,27 +82,27 @@ export default function ListSearchMovie() {
     const getListSearch = async (pageSearchNew, typeMovieSearchNew, categorySearchNew, nationSearchNew, yearStartSearchNew) => {
         setListSearchPlus(await getListSearchPlus(pageSearchNew, typeMovieSearchNew, categorySearchNew, nationSearchNew, yearStartSearchNew));
     }
-
     const handleSearch = async () => {
         const pageInput = 0;
         const typeMovieSortInput = document.getElementById("sort").value;
         const categoryInput = document.getElementById("category").value;
         const nationInput = document.getElementById("nation").value;
         const yearStartInput = document.getElementById("yearStart").value;
-
         await getTypeMovieSearch(typeMovieSortInput).then(await getCategorySearch(categoryInput)).then(await getNationSearch(nationInput)).then(await getYearStartSearch(yearStartInput)).then(await getPageSearch(pageInput))
         getListSearch(pageInput, typeMovieSortInput, categoryInput, nationInput, yearStartInput)
     }
-    console.log(listSearchPlus)
     return (
         <>
+            <title>Danh sách</title>
             <div className="breadcrumb-option">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="breadcrumb__links">
                                 <Link to={"/"}><i className="fa fa-home"></i> Trang chủ</Link>
-                                <Link to={"/list"}>Danh sách</Link>
+                                {nationSearch ?
+                                <span>Quốc gia: {nationSearch}</span>:<span>Danh sách tìm kiếm</span>
+                                }
                             </div>
                         </div>
                     </div>
@@ -92,7 +111,7 @@ export default function ListSearchMovie() {
 
 
             <section className="product-page spad">
-                <div className="container">g
+                <div className="container">
 
                     <div className="row">
                         <div className="col-lg-2 col-md-2 col-sm-3">
@@ -113,8 +132,8 @@ export default function ListSearchMovie() {
                                     handleSearch()
                                 }}>
                                     <option value="">--Thể loại--</option>
-                                    {categorys &&
-                                    categorys.map((item, index) =>
+                                    {
+                                    categorys?.map((item, index) =>
                                         <option value={item.id}>{item.name}</option>
                                     )
                                     }
@@ -128,9 +147,9 @@ export default function ListSearchMovie() {
                                 }}>
                                     <option value="">--Quốc gia--</option>
 
-                                    {nations &&
-                                    nations.map((item, index) =>
-                                        <option value={item.name}>{item.name}</option>
+                                    {
+                                    nations?.map((item, index) =>
+                                        <option key={`nations_${index}`} value={item.name}>{item.name}</option>
                                     )
                                     }
                                 </select>
@@ -175,139 +194,59 @@ export default function ListSearchMovie() {
                                     </div>
                                 </div>
                                 <div className="row">
-                                    {listSearchPlus.content &&
-                                    listSearchPlus.content.map((item, index) =>
-                                        <div className="col-lg-4 col-md-6 col-sm-6" title={item.name}>
-                                            <div className="product__item" onClick={() => {
-                                                navigate(`/detail/${item.id}`)
-                                            }}>
-                                                <div className="product__item__pic set-bg">
-                                                    <img src={item.img} alt=""/>
-                                                    {/*<div className="ep">mới</div>*/}
-
-                                                </div>
-                                                <div className="product__item__text">
-                                                    <h5><a href="#">{item.name}</a></h5>
+                                    {listSearchPlus.content && listSearchPlus.content.length>0?
+                                        listSearchPlus.content.map((item, index) =>
+                                            <div key={`listSearch_${index}`} className="col-lg-3 col-md-4 col-sm-6" title={item.name}>
+                                                <div className="product__item" onClick={() => {
+                                                    navigate(`/detail/${item.id}`)
+                                                }}>
+                                                    <div className="product__item__pic set-bg">
+                                                        <img className={"maxWidthImg"} src={item.img} alt=""/>
+                                                        {/*<div className="ep">mới</div>*/}
+                                                        <div className={"nameInline"}>
+                                                            <span>{item.name}</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
+                                        )
+                                        :
+
+                                        <div style={{display:"flex",paddingLeft:"120px"}}>
+                                            <h2 style={{color:"white"}}>-------- Không có dữ liệu --------</h2>
                                         </div>
-                                    )
+
                                     }
                                 </div>
                             </div>
-                            <div className="product__pagination">
-                                <a href="#" className="current-page">1</a>
-                                <a href="#">2</a>
-                                <a href="#">3</a>
-                                <a href="#">4</a>
-                                <a href="#">5</a>
-                                <a href="#"><i className="fa fa-angle-double-right"></i></a>
+                            <div className="product__pagination row" style={{justifyContent:"center"}}>
+                                <ReactPaginate
+                                    breakLabel="..."
+                                    nextLabel={pageSearch!=listSearchPlus.totalPages-1?<i style={{fontSize:"20px"}} className="fa fa-angle-double-right" onClick={() => {
+                                        nextPage()
+                                    }}></i>:""}
+                                    // onPageChange={handlePageClick}
+                                    pageRangeDisplayed={3}
+                                    pageCount={listSearchPlus.totalPages==1?"":listSearchPlus.totalPages}
+                                    previousLabel={pageSearch!=0?<i style={{fontSize:"20px"}} className="fa fa-angle-double-left" onClick={() => {
+                                        previousPage()
+                                    }}></i>:""}
+                                    marginPagesDisplayed={2}
+                                    onPageChange={handlePageChange}
+                                    renderOnZeroPageCount={null}
+                                    containerClassName={"pagination"}
+                                    pageClassName={"page-item"}
+                                    pageLinkClassName={"page-link"}
+                                    previousClassName={"page-item"}
+                                    nextClassName={"page-item"}
+                                    breakClassName={"page-item"}
+                                    breakLinkClassName={"page-item"}
+                                    activeClassName={"active"}
+                                />
                             </div>
+
                         </div>
-                        <div className="col-lg-4 col-md-6 col-sm-8">
-                            <div className="product__sidebar">
-                                <div className="product__sidebar__view">
-                                    <div className="section-title">
-                                        <h5>Top Views</h5>
-                                    </div>
-                                    <ul className="filter__controls">
-                                        <li className="active" data-filter="*">Day</li>
-                                        <li data-filter=".week">Week</li>
-                                        <li data-filter=".month">Month</li>
-                                        <li data-filter=".years">Years</li>
-                                    </ul>
-                                    <div className="filter__gallery">
-                                        <div className="product__sidebar__view__item set-bg mix day years"
-                                             data-setbg="img/sidebar/tv-1.jpg">
-                                            <div className="ep">18 / ?</div>
-                                            <div className="view"><i className="fa fa-eye"></i> 9141</div>
-                                            <h5><a href="#">Boruto: Naruto next generations</a></h5>
-                                        </div>
-                                        <div className="product__sidebar__view__item set-bg mix month week"
-                                             data-setbg="img/sidebar/tv-2.jpg">
-                                            <div className="ep">18 / ?</div>
-                                            <div className="view"><i className="fa fa-eye"></i> 9141</div>
-                                            <h5><a href="#">The Seven Deadly Sins: Wrath of the Gods</a></h5>
-                                        </div>
-                                        <div className="product__sidebar__view__item set-bg mix week years"
-                                             data-setbg="img/sidebar/tv-3.jpg">
-                                            <div className="ep">18 / ?</div>
-                                            <div className="view"><i className="fa fa-eye"></i> 9141</div>
-                                            <h5><a href="#">Sword art online alicization war of underworld</a></h5>
-                                        </div>
-                                        <div className="product__sidebar__view__item set-bg mix years month"
-                                             data-setbg="img/sidebar/tv-4.jpg">
-                                            <div className="ep">18 / ?</div>
-                                            <div className="view"><i className="fa fa-eye"></i> 9141</div>
-                                            <h5><a href="#">Fate/stay night: Heaven's Feel I. presage flower</a></h5>
-                                        </div>
-                                        <div className="product__sidebar__view__item set-bg mix day"
-                                             data-setbg="img/sidebar/tv-5.jpg">
-                                            <div className="ep">18 / ?</div>
-                                            <div className="view"><i className="fa fa-eye"></i> 9141</div>
-                                            <h5><a href="#">Fate stay night unlimited blade works</a></h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="product__sidebar__comment">
-                                    <div className="section-title">
-                                        <h5>New Comment</h5>
-                                    </div>
-                                    <div className="product__sidebar__comment__item">
-                                        <div className="product__sidebar__comment__item__pic">
-                                            <img src="img/sidebar/comment-1.jpg" alt=""/>
-                                        </div>
-                                        <div className="product__sidebar__comment__item__text">
-                                            <ul>
-                                                <li>Active</li>
-                                                <li>Movie</li>
-                                            </ul>
-                                            <h5><a href="#">The Seven Deadly Sins: Wrath of the Gods</a></h5>
-                                            <span><i className="fa fa-eye"></i> 19.141 Viewes</span>
-                                        </div>
-                                    </div>
-                                    <div className="product__sidebar__comment__item">
-                                        <div className="product__sidebar__comment__item__pic">
-                                            <img src="img/sidebar/comment-2.jpg" alt=""/>
-                                        </div>
-                                        <div className="product__sidebar__comment__item__text">
-                                            <ul>
-                                                <li>Active</li>
-                                                <li>Movie</li>
-                                            </ul>
-                                            <h5><a href="#">Shirogane Tamashii hen Kouhan sen</a></h5>
-                                            <span><i className="fa fa-eye"></i> 19.141 Viewes</span>
-                                        </div>
-                                    </div>
-                                    <div className="product__sidebar__comment__item">
-                                        <div className="product__sidebar__comment__item__pic">
-                                            <img src="img/sidebar/comment-3.jpg" alt=""/>
-                                        </div>
-                                        <div className="product__sidebar__comment__item__text">
-                                            <ul>
-                                                <li>Active</li>
-                                                <li>Movie</li>
-                                            </ul>
-                                            <h5><a href="#">Kizumonogatari III: Reiket su-hen</a></h5>
-                                            <span><i className="fa fa-eye"></i> 19.141 Viewes</span>
-                                        </div>
-                                    </div>
-                                    <div className="product__sidebar__comment__item">
-                                        <div className="product__sidebar__comment__item__pic">
-                                            <img src="img/sidebar/comment-4.jpg" alt=""/>
-                                        </div>
-                                        <div className="product__sidebar__comment__item__text">
-                                            <ul>
-                                                <li>Active</li>
-                                                <li>Movie</li>
-                                            </ul>
-                                            <h5><a href="#">Monogatari Series: Second Season</a></h5>
-                                            <span><i className="fa fa-eye"></i> 19.141 Viewes</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <Sibar/>
                     </div>
                 </div>
             </section>

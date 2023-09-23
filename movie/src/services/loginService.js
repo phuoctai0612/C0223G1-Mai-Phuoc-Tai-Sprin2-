@@ -9,7 +9,6 @@ export async function loginCustomer(email,password){
 
 export async function getAccountWithToken(token){
     const response =await axios.get(`http://localhost:8080/accounts/token/`+token)
-    console.log(response.data)
     localStorage.setItem("account",JSON.stringify(response.data))
     return response.data
 }

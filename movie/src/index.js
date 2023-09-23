@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Home from "./components/Home";
 import Header from "./components/Header";
@@ -14,28 +13,42 @@ import SignUp from "./components/SignUp";
 import Movie from "./components/Movie";
 import ListSearchMovie from "./components/ListSearchMovie";
 import ListSearchAuthor from "./components/ListSearchAuthor";
-
+import ListSearchActor from "./components/ListSearchActor";
+import ListSearchCategory from "./components/ListSearchCategory";
+import ListSearchNameMovie from "./components/ListSearchNameMovie";
+import ListFavouriteAccount from "./components/ListFavouriteAccount";
+import Error from "./components/Error";
+import Payment from "./components/Payment";
+import ReturnPayment from "./components/ReturnPayment";
+import HistoryPaymentAccount from "./components/HistoryPaymentAccount";
+import ReturnFailPayment from "./components/ReturnFailPayment";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-
         <BrowserRouter>
             <Header/>
             <Routes>
                 <Route element={<Home/>} path={""}/>
-                <Route element={<Home/>} path={"/home"}/>
+                <Route element={<Payment/>} path={"/payment"}/>
                 <Route element={<Login/>} path={"/login"}/>
                 <Route element={<SignUp/>} path={"/signup"}/>
                 <Route element={<ListSearchMovie/>} path={"/list"}/>
+                <Route element={<ListSearchMovie/>} path={"/list/:nation"}/>
+                <Route element={<ListSearchNameMovie/>} path={"/list-movie/:name"}/>
+                <Route element={<ListSearchNameMovie/>} path={"/list-movie/"}/>
+                <Route element={<ListSearchActor/>} path={"/list/actor/:actor"}/>
                 <Route element={<ListSearchAuthor/>} path={"/list/author/:id"}/>
+                <Route element={<ListSearchCategory/>} path={"/list/category/:id"}/>
                 <Route element={<Movie/>} path={"/movie/:id"}/>
                 <Route element={<Detail/>} path={"/detail/:id"}/>
-
+                <Route element={<Error/>} path={"/error"}/>
+                <Route element={<ReturnPayment/>} path={"/return"}/>
+                <Route element={<ListFavouriteAccount/>} path={"/favourite"}/>
+                <Route element={<ReturnFailPayment/>} path={"/return-fail"}/>
+                <Route element={<HistoryPaymentAccount/>} path={"/history-account"}/>
             </Routes>
             <Footer/>
         </BrowserRouter>
-
-
     </React.StrictMode>
 );
 

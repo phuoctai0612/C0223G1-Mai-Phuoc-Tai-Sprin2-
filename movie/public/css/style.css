@@ -24,13 +24,122 @@
 8.  Latest Section
 9.  Contact
 10.  Footer Style
+
 -------------------------------------------------------------------*/
 
 /*----------------------------------------*/
 
 /* Template default CSS
 /*----------------------------------------*/
+@charset "UTF-8";
+body {
+	color: #797e86;
+}
+.payment{
+	font-size: 35px;
+	color: white;
+}
+h1 {
+	color: #18191b;
+	margin-bottom: 2rem;
+}
 
+section {
+	display: flex;
+	flex-flow: row wrap;
+}
+.paymentIcon{
+	font-size: 30px;
+	color: #d22323;
+}
+section > div {
+	flex: 1;
+	padding: 0.5rem;
+}
+
+input[type=radio] {
+	display: none;
+}
+input[type=radio]:not(:disabled) ~ label {
+	cursor: pointer;
+}
+input[type=radio]:disabled ~ label {
+	color: #bcc2bf;
+	border-color: #bcc2bf;
+	box-shadow: none;
+	cursor: not-allowed;
+}
+
+label {
+
+	height: 100%;
+	display: block;
+	background: white;
+	border: 2px solid #20df80;
+	border-radius: 20px;
+	padding: 1rem;
+	margin-bottom: 1rem;
+	/*text-align: center;*/
+	box-shadow: 0px 3px 10px -2px rgba(161, 170, 166, 0.5);
+	position: relative;
+}
+/*.divPayment input:checked~label {*/
+/*	height: 100%;*/
+/*	display: block;*/
+/*	background: white;*/
+/*	border: 2px solid #20df80;*/
+/*	border-radius: 20px;*/
+/*	padding: 1rem;*/
+/*	margin-bottom: 1rem;*/
+/*	!*text-align: center;*!*/
+/*	box-shadow: 0px 3px 10px -2px rgba(161, 170, 166, 0.5);*/
+/*	position: relative;*/
+/*}*/
+
+.divPayment input[type=radio]:checked~label {
+	background: #20df80;
+	color: white;
+	box-shadow: 0px 0px 20px rgba(0, 255, 128, 0.75);
+}
+.divPayment p span{
+	margin-inline-end: 10px;
+}
+.divPayment input[type=radio]:checked~label p span{
+	color: #ffffff;
+}
+input[type=radio]:checked + label::after {
+	color: #3d3f43;
+	font-family: FontAwesome;
+	border: 2px solid #1dc973;
+	content: "";
+	font-size: 24px;
+	position: absolute;
+	top: -25px;
+	left: 50%;
+	transform: translateX(-50%);
+	height: 50px;
+	width: 50px;
+	line-height: 50px;
+	text-align: center;
+	border-radius: 50%;
+	background: white;
+	box-shadow: 0px 2px 5px -2px rgba(0, 0, 0, 0.25);
+}
+
+input[type=radio]#control_05:checked + label {
+	background: red;
+	border-color: red;
+}
+
+p {
+	font-weight: 900;
+}
+
+@media only screen and (max-width: 700px) {
+	section {
+		flex-direction: column;
+	}
+}
 
 
 #carouselExampleControls,
@@ -149,8 +258,8 @@ p {
 	margin: 0 0 15px 0;
 }
 
-img {
-	max-width: 100%;
+.img img {
+	width: 100%;
 }
 
 input:focus,
@@ -159,7 +268,9 @@ button:focus,
 textarea:focus {
 	outline: none;
 }
-
+#carousel img{
+	min-width: 100%;
+}
 a:hover,
 a:focus {
 	text-decoration: none;
@@ -187,7 +298,13 @@ ol {
 	padding-top: 25px;
 }
 .buttonWatchMovie{
-	padding-top: 60px;
+	padding-top: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 80px;
+	background: -webkit-focus-ring-color;
+	backdrop-filter: blur(8px);
 }
 .section-title {
 	margin-bottom: 30px;
@@ -217,7 +334,14 @@ ol {
 	background: #e53637;
 	content: "";
 }
-
+.maxImg{
+	height: 250px;
+	cursor: pointer
+}
+.maxWidthImg{
+	height: 250px;
+	width: 100%;
+}
 .set-bg {
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -225,7 +349,7 @@ ol {
 }
 
 .spad {
-	padding-top: 100px;
+
 	padding-bottom: 100px;
 }
 
@@ -407,7 +531,7 @@ ol {
 -----------------------*/
 
 .header {
-	background: #070720;
+	background: #000000;
 }
 
 .header__logo {
@@ -443,11 +567,70 @@ ol {
 	opacity: 1;
 	visibility: visible;
 }
-
+.nameInline{
+	font-weight:bolder;
+	font-size: 14px;
+	color: #ffffff;
+	transition: transform 0.3s ease;
+	background: rgba(0, 0, 0, 0.5);
+	display: inline-block;
+	padding: 10px 5px 10px 5px;
+	/*border-radius: 4px;*/
+	position: absolute;
+	left: 0;
+	width: 100%;
+	/*top: 220px;*/
+	bottom: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 .header__menu ul li:hover .dropdown li a {
 	background: transparent;
 }
+.play-button {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
+	font-size: 24px;
+	padding: 10px;
+	border-radius: 50%;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
 
+.image-container:hover .play-button {
+	opacity: 1;
+}
+.imgZoom{
+	position: relative;
+	overflow: hidden;
+}
+::-webkit-scrollbar {
+	width: 1rem;
+}
+
+::-webkit-scrollbar-track {
+	background-color: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #8d1616;
+	border-radius: 4px;
+	border: 3px solid transparent;
+	background-clip: content-box;
+}
+
+
+.imgZoom img{
+	transition: transform 0.3s ease;
+}
+.imgZoom:hover img{
+	transform: scale(1.2)
+}
 .header__menu ul li:last-child {
 	margin-right: 0;
 }
@@ -485,12 +668,14 @@ ol {
 	font-weight: 500;
 	padding: 5px 20px;
 }
+
+
 .liWidth{
 	width: 190px;
 	height: 30px;
 }
 .liWidthNation{
-	width: 130px;
+	width: 170px;
 	height: 30px;
 }
 .header__menu ul li a {
@@ -716,7 +901,7 @@ ol {
 
 .product {
 	padding-bottom: 60px;
-	padding-top: 80px;
+
 }
 
 .product-page {
@@ -746,13 +931,24 @@ ol {
 }
 
 .product__item__pic {
-	height: 325px;
+	/*height: 20px;*/
 	position: relative;
 	border-radius: 5px;
 }
 
 .product__item__pic .ep {
 	font-size: 13px;
+	color: #ffffff;
+	background: #e53637;
+	display: inline-block;
+	padding: 2px 12px;
+	border-radius: 4px;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+ .heart {
+	font-size:25px;
 	color: #ffffff;
 	background: #e53637;
 	display: inline-block;
@@ -1009,7 +1205,7 @@ ol {
 .product__pagination a {
 	display: inline-block;
 	font-size: 15px;
-	color: #b7b7b7;
+	/*color: #b7b7b7;*/
 	font-weight: 600;
 	height: 50px;
 	width: 50px;
@@ -1366,6 +1562,12 @@ ol {
 .search_name:hover{
 	cursor: pointer;
 	color: red;
+
+}
+
+.search_name_detail{
+	color: white;
+
 }
 .anime__details__episodes {
 	margin-bottom: 35px;
@@ -1384,7 +1586,11 @@ ol {
 	-o-transition: all, 0.3s;
 	transition: all, 0.3s;
 }
-
+.maxImgSidebar{
+	cursor: pointer;
+	width: 90px;
+	height: 120px;
+}
 .anime__details__episodes a:hover {
 	color: #000000;
 	background: #ffffff;
@@ -1820,7 +2026,7 @@ ol {
 -----------------------*/
 
 .login {
-	padding-top: 130px;
+	padding-top: 70px;
 	padding-bottom: 120px;
 }
 
@@ -1985,6 +2191,7 @@ ol {
 	position: absolute;
 	left: 32px;
 	top: 14px;
+
 }
 
 /*---------------------
@@ -1992,7 +2199,7 @@ ol {
 -----------------------*/
 
 .signup {
-	padding-top: 130px;
+	padding-top: 70px;
 	padding-bottom: 150px;
 }
 
@@ -2033,7 +2240,7 @@ ol {
 -----------------------*/
 
 .footer {
-	background: #070720;
+	background: #000000;
 	padding-top: 60px;
 	padding-bottom: 40px;
 	position: relative;
@@ -2238,6 +2445,7 @@ ol {
 @media only screen and (max-width: 767px) {
 	.hero {
 		overflow: hidden;
+
 	}
 	.header {
 		position: relative;
@@ -2253,6 +2461,7 @@ ol {
 	}
 	.header__menu {
 		display: none;
+
 	}
 	.slicknav_menu {
 		background: transparent;
